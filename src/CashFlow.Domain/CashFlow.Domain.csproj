@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="DMPatod.DDD.Core" Version="0.1.6" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Transactions\ValueObjects\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="CashFlow.Domain.Tests" />
+    <InternalsVisibleTo Include="CashFlow.Infrastructure.Tests" />
+  </ItemGroup>
+
+</Project>
