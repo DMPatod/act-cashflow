@@ -1,48 +1,37 @@
 ﻿using CashFlow.Domain.Transactions;
 using CashFlow.Domain.Transactions.Enums;
 using CashFlow.Domain.Transactions.Interfaces;
-using CashFlow.Domain.Transactions.Messaging;
-using MassTransit;
 
 namespace CashFlow.Application.Transactions
 {
     public class TransactionService
     {
-        private readonly IPublishEndpoint _publishEndpoint;
-        private readonly ITransactionRepository _transactionRepository;
+        private readonly ITransactionCreatedProducer _transactionCreatedProducer;
+        private readonly ITransactionUpdatedProducer _transactionUpdatedProducer;
 
-        public TransactionService(IPublishEndpoint publishEndpoint, ITransactionRepository transactionRepository)
+        public TransactionService(ITransactionCreatedProducer transactionCreatedProducer, ITransactionUpdatedProducer transactionUpdatedProducer)
         {
-            _publishEndpoint = publishEndpoint;
-            _transactionRepository = transactionRepository;
+            _transactionCreatedProducer = transactionCreatedProducer;
+            _transactionUpdatedProducer = transactionUpdatedProducer;
         }
 
-        public async Task<Transaction> AddAsync(double Amount, DateTime? dateTime, TransactionType type)
+        public async Task<Transaction> AddAsync(double amount, DateTime? dateTime, TransactionType type)
         {
-            dateTime ??= DateTime.UtcNow;
-
-            var transaction = Transaction.Create(
-                Amount,
-                dateTime.Value,
-                type);
-
-            var message = new TransactionCreated(transaction.Id.ToString(), transaction.Amount, transaction.DateTime, type);
-
-            await _publishEndpoint.Publish(message);
-
+            var transactionDateTime = dateTime ?? DateTime.Now;
+            var transaction = Transaction.Create(amount, transactionDateTime, type);
+            await _transactionCreatedProducer.PublishTransactionCreatedAsync(transaction);
             return transaction;
         }
 
         public async Task UpdateAsync(string id, double amount, DateTime? dateTime, TransactionType type)
         {
-            if (!Guid.TryParse(id, out var transactionId))
+            if (!Guid.TryParse(id, out var guid))
             {
-                throw new ArgumentException("Invalid transaction id.");
+                throw new ArgumentException("Invalid id");
             }
+            await _transactionUpdatedProducer.PublishTransactionUpdatedAsync(guid, amount, dateTime, type);
 
-            var message = new TransactionUpdated(id, amount, dateTime, type);
-
-            await _publishEndpoint.Publish(message);
+            await Task.CompletedTask;
         }
     }
 }

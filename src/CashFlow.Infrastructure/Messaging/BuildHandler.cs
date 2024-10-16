@@ -1,37 +1,20 @@
-﻿using CashFlow.Domain.Transactions.Messaging;
-using Confluent.Kafka;
-using Microsoft.Extensions.Configuration;
+﻿using CashFlow.Domain.Transactions.Interfaces;
+using CashFlow.Infrastructure.Messaging.Transactions.Consumers;
+using CashFlow.Infrastructure.Messaging.Transactions.Producers;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace CashFlow.Infrastructure.Messaging
 {
     public static class BuildHandler
     {
-        public static IServiceCollection AddMessaging(this IServiceCollection services, IConfiguration configuration)
+
+        public static IServiceCollection AddMessaging(this IServiceCollection services)
         {
-            var kafkaSettings = configuration.GetSection("Kafka").Get<KafkaSettings>() ?? throw new System.Exception("Kafka settings not found");
+            services.AddSingleton<ITransactionCreatedProducer, TransactionCreatedProducer>();
+            services.AddSingleton<ITransactionUpdatedProducer, TransactionUpdatedProducer>();
 
-            services.AddSingleton(sp =>
-            {
-                var config = new ProducerConfig
-                {
-                    BootstrapServers = kafkaSettings.BootstrapServers
-                };
-                return new ProducerBuilder<Null, TransactionCreated>(config).Build();
-            });
-
-            services.AddSingleton(sp =>
-            {
-                var cfg = new ConsumerConfig
-                {
-                    BootstrapServers = kafkaSettings.BootstrapServers,
-                    GroupId = kafkaSettings.GroupId,
-                    AutoOffsetReset = AutoOffsetReset.Earliest
-                };
-
-                return new ConsumerBuilder<Null, TransactionCreated>(cfg).Build();
-            });
-
+            services.AddHostedService<CreatedTransactionConsumer>();
+            services.AddHostedService<UpdatedTransactionConsumer>();
 
             return services;
         }

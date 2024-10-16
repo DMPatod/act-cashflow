@@ -19,13 +19,13 @@ namespace CashFlow.ApiServer.Controllers.V1
         [HttpGet]
         public ActionResult GetTransactions()
         {
-            return Ok();
+            throw new NotImplementedException();
         }
 
         [HttpGet("{id}")]
         public ActionResult GetTransaction(string id)
         {
-            return Ok();
+            throw new NotImplementedException();
         }
 
         [HttpPost]
@@ -55,7 +55,7 @@ namespace CashFlow.ApiServer.Controllers.V1
         [HttpDelete("{id}")]
         public IActionResult DeleteTransaction(string id)
         {
-            return Ok();
+            throw new NotImplementedException();
         }
     }
 }

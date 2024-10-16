@@ -5,13 +5,13 @@ namespace CashFlow.Domain.Transactions
 {
     public class Transaction : AggregateRoot<DefaultGuidId>
     {
-        public double Amount { get; set; }
+        public double Amount { get; private set; }
 
-        public DateTime DateTime { get; set; } = DateTime.Now;
+        public DateTime DateTime { get; private set; }
 
-        public TransactionType Type { get; set; }
+        public TransactionType Type { get; private set; }
 
-        internal Transaction(DefaultGuidId id, double amount, DateTime dateTime, TransactionType type)
+        public Transaction(DefaultGuidId id, double amount, DateTime dateTime, TransactionType type)
             : base(id)
         {
             Amount = amount;

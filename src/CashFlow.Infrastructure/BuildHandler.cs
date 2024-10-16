@@ -11,7 +11,7 @@ namespace CashFlow.Infrastructure
         {
             services.AddDataPersistence(configuration);
 
-            services.AddMessaging(configuration);
+            services.AddMessaging();
 
             return services;
         }
