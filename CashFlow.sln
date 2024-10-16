@@ -20,13 +20,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.dockerignore = .dockerignore
 		.gitignore = .gitignore
 		docker-compose.yml = docker-compose.yml
+		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CashFlow.ToolsRunner", "src\CashFlow.ToolsRunner\CashFlow.ToolsRunner.csproj", "{CE520F2A-DB68-49C5-87B7-069932DB9148}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CashFlow.ToolsRunner", "src\CashFlow.ToolsRunner\CashFlow.ToolsRunner.csproj", "{CE520F2A-DB68-49C5-87B7-069932DB9148}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CashFlow.Infrastructure.Tests", "tests\CashFlow.Infrastructure.Tests\CashFlow.Infrastructure.Tests.csproj", "{16EFA165-71E5-44A6-9B65-185405BB26B8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CashFlow.Infrastructure.Tests", "tests\CashFlow.Infrastructure.Tests\CashFlow.Infrastructure.Tests.csproj", "{16EFA165-71E5-44A6-9B65-185405BB26B8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CashFlow.ApiServer", "src\CashFlow.ApiServer\CashFlow.ApiServer.csproj", "{2EE90D26-FAC0-425A-9753-4CD87F92235C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CashFlow.ApiServer", "src\CashFlow.ApiServer\CashFlow.ApiServer.csproj", "{2EE90D26-FAC0-425A-9753-4CD87F92235C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

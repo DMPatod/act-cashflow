@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "CashFlow.ToolsRunner": {
+      "commandName": "Project"
+    },
+    "Container (Dockerfile)": {
+      "commandName": "Docker"
+    }
+  }
+}
